@@ -1,0 +1,8 @@
+
+description = 'btcd-cli4j Examples'
+dependencies {
+  compile project(':btcd-cli4j-core')
+  compile project(':btcd-cli4j-daemon')
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.10'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.3.2'
+}

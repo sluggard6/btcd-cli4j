@@ -8,3 +8,4 @@ target/
 # Project-specific patterns
 logs/
 cloc_analysis_14122015.txt
+/.gradle/

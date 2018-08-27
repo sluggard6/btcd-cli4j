@@ -1,0 +1,8 @@
+rootProject.name = 'btcd-cli4j-parent'
+include ':btcd-cli4j-core'
+include ':btcd-cli4j-daemon'
+include ':btcd-cli4j-examples'
+
+project(':btcd-cli4j-core').projectDir = "$rootDir/core" as File
+project(':btcd-cli4j-daemon').projectDir = "$rootDir/daemon" as File
+project(':btcd-cli4j-examples').projectDir = "$rootDir/examples" as File

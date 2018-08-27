@@ -65,7 +65,7 @@ public class BtcdClientImpl implements BtcdClient {
 		initialize();
 		rpcClient = new JsonRpcClientImpl(configurator.checkHttpProvider(httpProvider), 
 				configurator.checkNodeConfig(nodeConfig));
-		configurator.checkNodeVersion(getInfo().getVersion());
+		configurator.checkNodeVersion(getNetworkInfo().getVersion());
 		configurator.checkNodeHealth((Block)getBlock(getBestBlockHash(), true));
 	}
 
@@ -391,7 +391,7 @@ public class BtcdClientImpl implements BtcdClient {
 //		String infoJson = rpcClient.execute(Commands.GET_INFO.getName());
 //		Info info = rpcClient.getMapper().mapToEntity(infoJson, Info.class);
 //		return info;
-		throw new BitcoindException(code, message)
+		throw new BitcoindException(-32601, "This call was removed in version 0.16.0");
 	}
 
 	@Override

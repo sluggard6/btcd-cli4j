@@ -1,0 +1,6 @@
+
+description = 'btcd-cli4j Daemon'
+dependencies {
+  compile project(':btcd-cli4j-core')
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.10'
+}

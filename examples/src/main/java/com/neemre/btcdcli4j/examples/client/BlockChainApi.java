@@ -16,22 +16,23 @@ public class BlockChainApi {
 		CloseableHttpClient httpProvider = ResourceUtils.getHttpProvider();
 		Properties nodeConfig = ResourceUtils.getNodeConfig();
 		BtcdClient client = new VerboseBtcdClientImpl(httpProvider, nodeConfig);
-		client.help();
-
-		client.getBestBlockHash();
-		client.getBlock("00000000000000e8cf3d4fab91c642f5d5bb13339613aa915a42a7f1c91ab5ba");
-		client.getBlock("00000000000000e8cf3d4fab91c642f5d5bb13339613aa915a42a7f1c91ab5ba", true);
-		client.getBlockChainInfo();
-		client.getBlockCount();
-		client.getBlockHash(345168);
-		client.getChainTips();
-		client.getDifficulty();
-		client.getMemPoolInfo();
-		client.getRawMemPool();
-		client.getRawMemPool(true);
-		client.getTxOutSetInfo();
-		client.verifyChain();
-		client.verifyChain(CheckLevels.LEVEL_4.getIdentifier());
-		client.verifyChain(CheckLevels.LEVEL_4.getIdentifier(), 1000);
+		client.getNetworkInfo();
+//		client.help();
+//
+//		client.getBestBlockHash();
+//		client.getBlock("00000000000000e8cf3d4fab91c642f5d5bb13339613aa915a42a7f1c91ab5ba");
+//		client.getBlock("00000000000000e8cf3d4fab91c642f5d5bb13339613aa915a42a7f1c91ab5ba", true);
+//		client.getBlockChainInfo();
+//		client.getBlockCount();
+//		client.getBlockHash(345168);
+//		client.getChainTips();
+//		client.getDifficulty();
+//		client.getMemPoolInfo();
+//		client.getRawMemPool();
+//		client.getRawMemPool(true);
+//		client.getTxOutSetInfo();
+//		client.verifyChain();
+//		client.verifyChain(CheckLevels.LEVEL_4.getIdentifier());
+//		client.verifyChain(CheckLevels.LEVEL_4.getIdentifier(), 1000);
 	}
 }

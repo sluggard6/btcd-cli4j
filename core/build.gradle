@@ -1,0 +1,10 @@
+
+description = 'btcd-cli4j Core'
+dependencies {
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.3.6'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.5.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.5.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.5.0'
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.10'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.3.2'
+}
