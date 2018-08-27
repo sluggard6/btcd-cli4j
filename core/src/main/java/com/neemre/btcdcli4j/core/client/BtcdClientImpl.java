@@ -388,9 +388,10 @@ public class BtcdClientImpl implements BtcdClient {
 
 	@Override
 	public Info getInfo() throws BitcoindException, CommunicationException {
-		String infoJson = rpcClient.execute(Commands.GET_INFO.getName());
-		Info info = rpcClient.getMapper().mapToEntity(infoJson, Info.class);
-		return info;
+//		String infoJson = rpcClient.execute(Commands.GET_INFO.getName());
+//		Info info = rpcClient.getMapper().mapToEntity(infoJson, Info.class);
+//		return info;
+		throw new BitcoindException(code, message)
 	}
 
 	@Override

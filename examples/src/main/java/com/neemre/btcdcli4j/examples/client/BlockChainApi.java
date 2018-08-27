@@ -16,6 +16,7 @@ public class BlockChainApi {
 		CloseableHttpClient httpProvider = ResourceUtils.getHttpProvider();
 		Properties nodeConfig = ResourceUtils.getNodeConfig();
 		BtcdClient client = new VerboseBtcdClientImpl(httpProvider, nodeConfig);
+		client.help();
 
 		client.getBestBlockHash();
 		client.getBlock("00000000000000e8cf3d4fab91c642f5d5bb13339613aa915a42a7f1c91ab5ba");

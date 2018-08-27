@@ -114,7 +114,8 @@ public interface BtcdClient {
 
 	Long getHashesPerSec() throws BitcoindException, CommunicationException;
 
-	Info getInfo() throws BitcoindException, CommunicationException;
+//	@Deprecated
+//	Info getInfo() throws BitcoindException, CommunicationException;
 
 	MemPoolInfo getMemPoolInfo() throws BitcoindException, CommunicationException;
 
