@@ -17,6 +17,8 @@ public class BlockChainApi {
 		Properties nodeConfig = ResourceUtils.getNodeConfig();
 		BtcdClient client = new VerboseBtcdClientImpl(httpProvider, nodeConfig);
 		client.getNetworkInfo();
+		client.listAccounts();
+		client.getAccount("0x5b284B31E2411258E36cB56a6b900D19a8c00B03");
 //		client.help();
 //
 //		client.getBestBlockHash();

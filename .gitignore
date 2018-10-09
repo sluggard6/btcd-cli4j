@@ -9,3 +9,6 @@ target/
 logs/
 cloc_analysis_14122015.txt
 /.gradle/
+
+
+build
