@@ -35,6 +35,8 @@ public class PaymentOverview extends Entity {
 	private Integer vOut;
 	@Setter(AccessLevel.NONE)
 	private BigDecimal fee;
+	private Boolean abandoned;
+	private String label;
 
 
 	public PaymentOverview(Boolean involvesWatchOnly, String account, String address, 
@@ -46,6 +48,13 @@ public class PaymentOverview extends Entity {
 		setAmount(amount);
 		setVOut(vOut);
 		setFee(fee);
+	}
+	
+	public PaymentOverview(Boolean involvesWatchOnly, String account, String address, 
+			PaymentCategories category, BigDecimal amount, Integer vOut, BigDecimal fee, Boolean abandoned, String label) {
+		this(involvesWatchOnly,account,address,category,amount,vOut,fee);
+		setAbandoned(abandoned);
+		setLabel(label);
 	}
 
 	public void setAmount(BigDecimal amount) {

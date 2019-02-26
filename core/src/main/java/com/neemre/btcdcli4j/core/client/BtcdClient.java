@@ -15,6 +15,7 @@ import com.neemre.btcdcli4j.core.domain.AddressInfo;
 import com.neemre.btcdcli4j.core.domain.AddressOverview;
 import com.neemre.btcdcli4j.core.domain.Block;
 import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
+import com.neemre.btcdcli4j.core.domain.BlockHeader;
 import com.neemre.btcdcli4j.core.domain.Info;
 import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
 import com.neemre.btcdcli4j.core.domain.MiningInfo;
@@ -33,6 +34,7 @@ import com.neemre.btcdcli4j.core.domain.Tip;
 import com.neemre.btcdcli4j.core.domain.Transaction;
 import com.neemre.btcdcli4j.core.domain.TxOutSetInfo;
 import com.neemre.btcdcli4j.core.domain.WalletInfo;
+import com.neemre.btcdcli4j.core.domain.enums.AddressType;
 
 public interface BtcdClient {
 	
@@ -103,6 +105,10 @@ public interface BtcdClient {
 	Integer getBlockCount() throws BitcoindException, CommunicationException;
 
 	String getBlockHash(Integer blockHeight) throws BitcoindException, CommunicationException;
+	
+	BlockHeader getBlockHeader(String headerHash) throws BitcoindException, CommunicationException;
+	
+	Object getBlockHeader(String headerHash, Boolean isDecoded) throws BitcoindException, CommunicationException;
 
 	List<Tip> getChainTips() throws BitcoindException, CommunicationException;
 
@@ -133,7 +139,9 @@ public interface BtcdClient {
 
 	String getNewAddress() throws BitcoindException, CommunicationException;
 
-	String getNewAddress(String account) throws BitcoindException, CommunicationException;
+	String getNewAddress(String label) throws BitcoindException, CommunicationException;
+	
+	String getNewAddress(String label, AddressType addressType) throws BitcoindException, CommunicationException;
 
 	List<PeerNode> getPeerInfo() throws BitcoindException, CommunicationException;
 
@@ -185,10 +193,10 @@ public interface BtcdClient {
 
 	void importPrivKey(String privateKey) throws BitcoindException, CommunicationException;
 
-	void importPrivKey(String privateKey, String account) throws BitcoindException, 
+	void importPrivKey(String privateKey, String label) throws BitcoindException, 
 			CommunicationException;
 
-	void importPrivKey(String privateKey, String account, Boolean withRescan) 
+	void importPrivKey(String privateKey, String label, Boolean withRescan) 
 			throws BitcoindException, CommunicationException;
 
 	void importWallet(String filePath) throws BitcoindException, CommunicationException;
@@ -197,7 +205,16 @@ public interface BtcdClient {
 
 	void keyPoolRefill(Integer keypoolSize) throws BitcoindException, CommunicationException;
 
+	/**
+	 * @deprecated "listaccounts is deprecated and will be removed in V0.18."
+	 * @return
+	 * @throws BitcoindException
+	 * @throws CommunicationException
+	 */
+	@Deprecated()
 	Map<String, BigDecimal> listAccounts() throws BitcoindException, CommunicationException;
+	
+	List<String> listLabels() throws BitcoindException, CommunicationException;
 
 	Map<String, BigDecimal> listAccounts(Integer confirmations) throws BitcoindException, 
 			CommunicationException;
@@ -205,6 +222,7 @@ public interface BtcdClient {
 	Map<String, BigDecimal> listAccounts(Integer confirmations, Boolean withWatchOnly) 
 			throws BitcoindException, CommunicationException;
 
+	@Deprecated
 	List<List<AddressOverview>> listAddressGroupings() throws BitcoindException, 
 			CommunicationException;
 
@@ -376,4 +394,5 @@ public interface BtcdClient {
 	String getNodeVersion();
 
 	void close();
+
 }

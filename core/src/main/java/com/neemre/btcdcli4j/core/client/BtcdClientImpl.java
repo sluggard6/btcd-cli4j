@@ -23,6 +23,7 @@ import com.neemre.btcdcli4j.core.domain.AddressInfo;
 import com.neemre.btcdcli4j.core.domain.AddressOverview;
 import com.neemre.btcdcli4j.core.domain.Block;
 import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
+import com.neemre.btcdcli4j.core.domain.BlockHeader;
 import com.neemre.btcdcli4j.core.domain.Info;
 import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
 import com.neemre.btcdcli4j.core.domain.MemPoolTransaction;
@@ -43,6 +44,7 @@ import com.neemre.btcdcli4j.core.domain.Tip;
 import com.neemre.btcdcli4j.core.domain.Transaction;
 import com.neemre.btcdcli4j.core.domain.TxOutSetInfo;
 import com.neemre.btcdcli4j.core.domain.WalletInfo;
+import com.neemre.btcdcli4j.core.domain.enums.AddressType;
 import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClient;
 import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClientImpl;
 import com.neemre.btcdcli4j.core.util.CollectionUtils;
@@ -351,6 +353,26 @@ public class BtcdClientImpl implements BtcdClient {
 		String headerHash = rpcClient.getParser().parseString(headerHashJson);
 		return headerHash;
 	}
+	
+	@Override
+	public BlockHeader getBlockHeader(String headerHash) throws BitcoindException, CommunicationException {
+		String blockJson = rpcClient.execute(Commands.GET_BLOCK_HEADER.getName(), headerHash);
+		BlockHeader blockHeader = rpcClient.getMapper().mapToEntity(blockJson, Block.class);
+		return blockHeader;
+	}
+	
+	@Override
+	public Object getBlockHeader(String headerHash, Boolean isDecoded) throws BitcoindException, CommunicationException {
+		List<Object> params = CollectionUtils.asList(headerHash, isDecoded);
+		String blockJson = rpcClient.execute(Commands.GET_BLOCK_HEADER.getName(), params);
+		if (isDecoded) {
+			BlockHeader blockHeader = rpcClient.getMapper().mapToEntity(blockJson, BlockHeader.class);
+			return blockHeader;
+		} else {
+			String blockHeader = rpcClient.getParser().parseString(blockJson);
+			return blockHeader;
+		}
+	}
 
 	@Override
 	public List<Tip> getChainTips() throws BitcoindException, CommunicationException {
@@ -459,8 +481,16 @@ public class BtcdClientImpl implements BtcdClient {
 	}
 
 	@Override
-	public String getNewAddress(String account) throws BitcoindException, CommunicationException {
-		String addressJson = rpcClient.execute(Commands.GET_NEW_ADDRESS.getName(), account);
+	public String getNewAddress(String label) throws BitcoindException, CommunicationException {
+		String addressJson = rpcClient.execute(Commands.GET_NEW_ADDRESS.getName(), label);
+		String address = rpcClient.getParser().parseString(addressJson);
+		return address;
+	}
+	
+	@Override
+	public String getNewAddress(String label, AddressType addressType) throws BitcoindException, CommunicationException {
+		List<Object> params = CollectionUtils.asList(label, addressType);
+		String addressJson = rpcClient.execute(Commands.GET_NEW_ADDRESS.getName(), params);
 		String address = rpcClient.getParser().parseString(addressJson);
 		return address;
 	}
@@ -644,16 +674,16 @@ public class BtcdClientImpl implements BtcdClient {
 	}
 
 	@Override
-	public void importPrivKey(String privateKey, String account) throws BitcoindException, 
+	public void importPrivKey(String privateKey, String label) throws BitcoindException, 
 			CommunicationException {
-		List<Object> params = CollectionUtils.asList(privateKey, account);
+		List<Object> params = CollectionUtils.asList(privateKey, label);
 		rpcClient.execute(Commands.IMPORT_PRIV_KEY.getName(), params);
 	}
 
 	@Override
-	public void importPrivKey(String privateKey, String account, Boolean withRescan) 
+	public void importPrivKey(String privateKey, String label, Boolean withRescan) 
 			throws BitcoindException, CommunicationException{
-		List<Object> params = CollectionUtils.asList(privateKey, account, withRescan);
+		List<Object> params = CollectionUtils.asList(privateKey, label, withRescan);
 		rpcClient.execute(Commands.IMPORT_PRIV_KEY.getName(), params);
 	}
 
@@ -680,6 +710,13 @@ public class BtcdClientImpl implements BtcdClient {
 				String.class, BigDecimal.class);
 		accounts = NumberUtils.setValueScale(accounts, Defaults.DECIMAL_SCALE);
 		return accounts;
+	}
+	
+	@Override
+	public List<String> listLabels() throws BitcoindException, CommunicationException {
+		String accountsJson = rpcClient.execute(Commands.LIST_LABELS.getName());
+		List<String> lables = rpcClient.getMapper().mapToList(accountsJson, String.class);
+		return lables;
 	}
 
 	@Override
