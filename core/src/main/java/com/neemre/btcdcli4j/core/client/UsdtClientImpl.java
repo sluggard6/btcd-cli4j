@@ -1319,8 +1319,17 @@ public class UsdtClientImpl implements UsdtClient {
     @Override
     public String omniSend(String fromAddress, String toAddress, Integer propertyId, BigDecimal amount) throws BitcoindException, CommunicationException {
         amount = amount.setScale(Defaults.DECIMAL_SCALE, Defaults.ROUNDING_MODE);
-        List<Object> params = CollectionUtils.asList(fromAddress, toAddress, propertyId, amount);
+        List<Object> params = CollectionUtils.asList(fromAddress, toAddress, propertyId, amount.toString());
         String transactionIdJson = rpcClient.execute(UsdtCommands.OMNI_SEND.getName(), params);
+        String transactionId = rpcClient.getParser().parseString(transactionIdJson);
+        return transactionId;
+    }
+
+    @Override
+    public String omniFundedSend(String fromAddress, String toAddress, Integer propertyId, BigDecimal amount, String feeAddress) throws BitcoindException, CommunicationException {
+        amount = amount.setScale(Defaults.DECIMAL_SCALE, Defaults.ROUNDING_MODE);
+        List<Object> params = CollectionUtils.asList(fromAddress, toAddress, propertyId, amount.toString(), feeAddress);
+        String transactionIdJson = rpcClient.execute(UsdtCommands.OMNI_FUNDED_SEND.getName(), params);
         String transactionId = rpcClient.getParser().parseString(transactionIdJson);
         return transactionId;
     }

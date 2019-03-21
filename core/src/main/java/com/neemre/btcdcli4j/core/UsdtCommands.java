@@ -93,6 +93,7 @@ public enum UsdtCommands {
 	WALLET_PASSPHRASE_CHANGE("walletpassphrasechange", 2, 2),
 	OMNI_GETBALANCE("omni_getbalance", 2, 2),
 	OMNI_SEND("omni_send", 4, 6),
+	OMNI_FUNDED_SEND("omni_funded_send", 5, 5),
 	OMNI_GETTRANSACTION("omni_gettransaction", 1, 1);
 
 
