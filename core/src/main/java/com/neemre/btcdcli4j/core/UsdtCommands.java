@@ -94,6 +94,7 @@ public enum UsdtCommands {
 	OMNI_GETBALANCE("omni_getbalance", 2, 2),
 	OMNI_SEND("omni_send", 4, 6),
 	OMNI_FUNDED_SEND("omni_funded_send", 5, 5),
+	OMNI_LISTTRANSACTIONS("omni_listtransactions", 0, 5),
 	OMNI_GETTRANSACTION("omni_gettransaction", 1, 1);
 
 

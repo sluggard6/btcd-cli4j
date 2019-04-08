@@ -1334,6 +1334,33 @@ public class UsdtClientImpl implements UsdtClient {
         return transactionId;
     }
 
+    @Override
+    public List<OmniTransaction> omniListTransactions(String address, Integer count, Integer skip, Integer startBlock, Integer endBlock) throws BitcoindException, CommunicationException {
+        List<Object> params = CollectionUtils.asList(address, count, skip, startBlock, endBlock);
+        String omniListTransactions = rpcClient.execute(UsdtCommands.OMNI_LISTTRANSACTIONS.getName(), params);
+        List<OmniTransaction> omniTransactions = rpcClient.getMapper().mapToList(omniListTransactions,
+                OmniTransaction.class);
+        return omniTransactions;
+    }
+
+    @Override
+    public List<OmniTransaction> omniListTransactions(String address) throws BitcoindException, CommunicationException {
+        List<Object> params = CollectionUtils.asList(address, Integer.MAX_VALUE);
+        String omniListTransactions = rpcClient.execute(UsdtCommands.OMNI_LISTTRANSACTIONS.getName(), params);
+        List<OmniTransaction> omniTransactions = rpcClient.getMapper().mapToList(omniListTransactions,
+                OmniTransaction.class);
+        return omniTransactions;
+    }
+
+    @Override
+    public List<OmniTransaction> omniListTransactions(String address, Integer startBlock) throws BitcoindException, CommunicationException {
+        List<Object> params = CollectionUtils.asList(address, Integer.MAX_VALUE, 0, startBlock);
+        String omniListTransactions = rpcClient.execute(UsdtCommands.OMNI_LISTTRANSACTIONS.getName(), params);
+        List<OmniTransaction> omniTransactions = rpcClient.getMapper().mapToList(omniListTransactions,
+                OmniTransaction.class);
+        return omniTransactions;
+    }
+
     private void initialize() {
         LOG.info(">> initialize(..): initiating the 'bitcoind' core wrapper");
         configurator = new ClientConfigurator();

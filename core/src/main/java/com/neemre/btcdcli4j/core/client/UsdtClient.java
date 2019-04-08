@@ -403,4 +403,11 @@ public interface UsdtClient {
     String omniSend(String fromAddress, String toAddress, Integer propertyId, BigDecimal amount) throws BitcoindException, CommunicationException;
 
     String omniFundedSend(String fromAddress, String toAddress, Integer propertyId, BigDecimal amount, String feeAddress) throws BitcoindException, CommunicationException;
+
+    List<OmniTransaction> omniListTransactions(String address, Integer count, Integer skip, Integer startBlock, Integer endBlock) throws BitcoindException, CommunicationException;
+
+    List<OmniTransaction> omniListTransactions(String address) throws BitcoindException, CommunicationException;
+
+    List<OmniTransaction> omniListTransactions(String address, Integer startBlock) throws BitcoindException, CommunicationException;
+
 }
