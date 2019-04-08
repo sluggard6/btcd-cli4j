@@ -14,9 +14,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 /**
- * @Author: Zihao Wang
- * @Date: 2019/3/18 14:02
- * @Version 1.0
+ * @author Zihao Wang
  */
 @Data
 @NoArgsConstructor

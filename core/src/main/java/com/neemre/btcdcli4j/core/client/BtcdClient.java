@@ -207,8 +207,8 @@ public interface BtcdClient {
 
 	/**
 	 * @deprecated "listaccounts is deprecated and will be removed in V0.18."
-	 * @return
-	 * @throws BitcoindException
+	 * @return accounts
+	 * @throws BitcoindException 
 	 * @throws CommunicationException
 	 */
 	@Deprecated()
