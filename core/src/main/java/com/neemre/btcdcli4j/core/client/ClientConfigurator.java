@@ -18,9 +18,9 @@ import com.neemre.btcdcli4j.core.common.Errors;
 import com.neemre.btcdcli4j.core.domain.Block;
 import com.neemre.btcdcli4j.core.util.CollectionUtils;
 import com.neemre.btcdcli4j.core.util.StringUtils;
-import com.squareup.okhttp.OkHttpClient;
 
 import lombok.Getter;
+import okhttp3.OkHttpClient;
 
 public class ClientConfigurator extends AgentConfigurator {
 

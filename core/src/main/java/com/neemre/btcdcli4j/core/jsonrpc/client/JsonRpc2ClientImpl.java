@@ -26,29 +26,28 @@ import com.neemre.btcdcli4j.core.jsonrpc.domain.JsonRpcResponse;
 
 import okhttp3.OkHttpClient;
 
-public class JsonRpcClientImpl implements JsonRpcClient {
+public class JsonRpc2ClientImpl implements JsonRpcClient {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(JsonRpcClientImpl.class);
+private static final Logger LOG = LoggerFactory.getLogger(JsonRpcClientImpl.class);
 	
 	private SimpleHttpClient httpClient;
 	private JsonPrimitiveParser parser;
 	private JsonMapper mapper;
 
-
-	public JsonRpcClientImpl(CloseableHttpClient httpProvider, Properties nodeConfig) {
+	public JsonRpc2ClientImpl(CloseableHttpClient httpProvider, Properties nodeConfig) {
 		LOG.info("** JsonRpcClientImpl(): initiating the JSON-RPC communication layer");
 		httpClient = new SimpleHttpClientImpl(httpProvider, nodeConfig);
 		parser = new JsonPrimitiveParser();
 		mapper = new JsonMapper();
 	}
 
-	public JsonRpcClientImpl(OkHttpClient httpProvider, Properties nodeConfig) {
+	public JsonRpc2ClientImpl(OkHttpClient httpProvider, Properties nodeConfig) {
 		LOG.info("** JsonRpcClientImpl(): initiating the JSON-RPC communication layer");
 		httpClient = new OkHttpClientImpl(httpProvider, nodeConfig);
 		parser = new JsonPrimitiveParser();
 		mapper = new JsonMapper();
 	}
-
+	
 	@Override
 	public String execute(String method) throws BitcoindException, CommunicationException {
 		return execute(method, null);
@@ -61,7 +60,7 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 		params.add(param);
 		return execute(method, params);
 	}
-
+	
 	@Override
 	public <T> String execute(String method, List<T> params) throws BitcoindException, 
 			CommunicationException {
@@ -80,7 +79,7 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 				method, response.getResult());
 		return response.getResult();
 	}
-
+	
 	@Override
 	public JsonPrimitiveParser getParser() {
 		return parser;
@@ -93,12 +92,12 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 
 	@Override
 	public void close() {
-		httpClient.close();
+		return;
 	}
 	
 	private <T> JsonRpcRequest<T> getNewRequest(String method, List<T> params, String id) {
 		JsonRpcRequest<T> rpcRequest = new JsonRpcRequest<T>();
-		rpcRequest.setJsonrpc(Defaults.JSON_RPC_VERSION);
+		rpcRequest.setJsonrpc(Defaults.JSON_RPC_VERSION_2);
 		rpcRequest.setMethod(method);
 		rpcRequest.setParams(params);
 		rpcRequest.setId(id);
@@ -107,13 +106,13 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 
 	private JsonRpcResponse getNewResponse(String result, JsonRpcError error, String id) {
 		JsonRpcResponse rpcResponse = new JsonRpcResponse();
-		rpcResponse.setJsonrpc(Defaults.JSON_RPC_VERSION);
+		rpcResponse.setJsonrpc(Defaults.JSON_RPC_VERSION_2);
 		rpcResponse.setResult(result);
 		rpcResponse.setError(error);
 		rpcResponse.setId(id);
 		return rpcResponse;
 	}
-
+	
 	private String getNewUuid() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
@@ -147,4 +146,5 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 		}
 		return response;
 	}
+
 }

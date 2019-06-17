@@ -2,6 +2,7 @@ package com.neemre.btcdcli4j.core.jsonrpc.deserialization;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -20,6 +21,7 @@ public class JsonRpcResponseDeserializer extends JsonDeserializer<JsonRpcRespons
 		return rawRpcResponse.toJsonRpcResponse();
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private static class RawJsonRpcResponse {
 
 		public JsonNode result;
