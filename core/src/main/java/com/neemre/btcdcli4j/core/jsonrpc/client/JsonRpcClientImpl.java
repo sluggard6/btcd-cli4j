@@ -14,6 +14,7 @@ import com.neemre.btcdcli4j.core.CommunicationException;
 import com.neemre.btcdcli4j.core.common.Defaults;
 import com.neemre.btcdcli4j.core.common.Errors;
 import com.neemre.btcdcli4j.core.http.HttpConstants;
+import com.neemre.btcdcli4j.core.http.client.OkHttpClientImpl;
 import com.neemre.btcdcli4j.core.http.client.SimpleHttpClient;
 import com.neemre.btcdcli4j.core.http.client.SimpleHttpClientImpl;
 import com.neemre.btcdcli4j.core.jsonrpc.JsonMapper;
@@ -22,6 +23,7 @@ import com.neemre.btcdcli4j.core.jsonrpc.JsonRpcLayerException;
 import com.neemre.btcdcli4j.core.jsonrpc.domain.JsonRpcError;
 import com.neemre.btcdcli4j.core.jsonrpc.domain.JsonRpcRequest;
 import com.neemre.btcdcli4j.core.jsonrpc.domain.JsonRpcResponse;
+import com.squareup.okhttp.OkHttpClient;
 
 public class JsonRpcClientImpl implements JsonRpcClient {
 	
@@ -35,6 +37,13 @@ public class JsonRpcClientImpl implements JsonRpcClient {
 	public JsonRpcClientImpl(CloseableHttpClient httpProvider, Properties nodeConfig) {
 		LOG.info("** JsonRpcClientImpl(): initiating the JSON-RPC communication layer");
 		httpClient = new SimpleHttpClientImpl(httpProvider, nodeConfig);
+		parser = new JsonPrimitiveParser();
+		mapper = new JsonMapper();
+	}
+
+	public JsonRpcClientImpl(OkHttpClient httpProvider, Properties nodeConfig) {
+		LOG.info("** JsonRpcClientImpl(): initiating the JSON-RPC communication layer");
+		httpClient = new OkHttpClientImpl(httpProvider, nodeConfig);
 		parser = new JsonPrimitiveParser();
 		mapper = new JsonMapper();
 	}

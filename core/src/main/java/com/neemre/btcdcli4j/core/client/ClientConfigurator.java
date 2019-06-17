@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import lombok.Getter;
-
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -20,6 +18,9 @@ import com.neemre.btcdcli4j.core.common.Errors;
 import com.neemre.btcdcli4j.core.domain.Block;
 import com.neemre.btcdcli4j.core.util.CollectionUtils;
 import com.neemre.btcdcli4j.core.util.StringUtils;
+import com.squareup.okhttp.OkHttpClient;
+
+import lombok.Getter;
 
 public class ClientConfigurator extends AgentConfigurator {
 
@@ -45,6 +46,19 @@ public class ClientConfigurator extends AgentConfigurator {
 		return httpProvider;
 	}
 	
+	public OkHttpClient checkHttpProvider(OkHttpClient httpProvider) {
+		if (httpProvider == null) {
+			LOG.warn("-- checkHttpProvider(..): no preconfigured HTTP provider detected; reverting "
+					+ "to library default settings");
+			httpProvider = getOkHttpProvider();
+		}
+		return httpProvider;
+	}
+	
+	private OkHttpClient getOkHttpProvider() {
+		return new OkHttpClient();
+	}
+
 	public String checkNodeVersion(Integer encodedVersion) {
 		nodeVersion = decodeNodeVersion(encodedVersion);
 		for (String supportedVersion : Defaults.NODE_VERSIONS) {
@@ -89,4 +103,5 @@ public class ClientConfigurator extends AgentConfigurator {
 		}
 		return StringUtils.join(separatedFormat);    
 	}
+
 }

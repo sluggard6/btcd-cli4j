@@ -49,6 +49,7 @@ import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClient;
 import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClientImpl;
 import com.neemre.btcdcli4j.core.util.CollectionUtils;
 import com.neemre.btcdcli4j.core.util.NumberUtils;
+import com.squareup.okhttp.OkHttpClient;
 
 public class BtcdClientImpl implements BtcdClient {
 
@@ -67,9 +68,16 @@ public class BtcdClientImpl implements BtcdClient {
 		initialize();
 		rpcClient = new JsonRpcClientImpl(configurator.checkHttpProvider(httpProvider), 
 				configurator.checkNodeConfig(nodeConfig));
-		configurator.checkNodeVersion(getNetworkInfo().getVersion());
+//		configurator.checkNodeVersion(getNetworkInfo().getVersion());
 //		configurator.checkNodeVersion(getInfo().getVersion());
-		configurator.checkNodeHealth((Block)getBlock(getBestBlockHash(), true));
+//		configurator.checkNodeHealth((Block)getBlock(getBestBlockHash(), true));
+	}
+	
+	public BtcdClientImpl(OkHttpClient httpProvider, Properties nodeConfig, String other) 
+			throws BitcoindException, CommunicationException {
+		initialize();
+		rpcClient = new JsonRpcClientImpl(configurator.checkHttpProvider(httpProvider), 
+				configurator.checkNodeConfig(nodeConfig));
 	}
 
 	public BtcdClientImpl(String rpcUser, String rpcPassword) throws BitcoindException, 

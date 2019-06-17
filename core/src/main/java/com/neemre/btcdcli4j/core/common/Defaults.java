@@ -14,4 +14,6 @@ public final class Defaults {
 
 	public static final String[] NODE_VERSIONS = {"0.10.0", "0.10.1", "0.10.2", "0.10.3"};
 	public static final String JSON_RPC_VERSION = "1.0";
+	
+	public static final String JSON_RPC_VERSION_2 = "2.0";
 }
