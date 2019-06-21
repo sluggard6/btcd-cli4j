@@ -52,7 +52,7 @@ public class DcrClientImpl implements DcrClient {
 	
 	@Override
 	public String getNewAddress(String account) throws BitcoindException, CommunicationException {
-		String addressJson = rpcClient.execute(DcrCommands.GET_NEW_ADDRESS.getName());
+		String addressJson = rpcClient.execute(DcrCommands.GET_NEW_ADDRESS.getName(), account);
 		String address = rpcClient.getParser().parseString(addressJson);
 		return address;
 	}
@@ -175,6 +175,25 @@ public class DcrClientImpl implements DcrClient {
 		String balanceJson = rpcClient.execute(Commands.GET_BALANCE.getName(), params);
 		BigDecimal balance = rpcClient.getParser().parseBigDecimal(balanceJson);
 		return balance;
+	}
+
+	@Override
+	public Map<String, BigDecimal> listAccounts() throws BitcoindException, CommunicationException {
+		String accountsJson = rpcClient.execute(DcrCommands.LIST_ACCOUNTS.getName());
+		Map<String, BigDecimal> accounts = rpcClient.getMapper().mapToMap(accountsJson, String.class, BigDecimal.class);
+		return accounts;
+	}
+
+	@Override
+	public void createNewAccount(String account) throws BitcoindException, CommunicationException {
+		String accountJson = rpcClient.execute(DcrCommands.CREATE_NEW_ACCOUNT.getName(), account);
+	}
+
+	@Override
+	public List<String> getAddressesByAccount(String account) throws BitcoindException, CommunicationException {
+		String addressesJson = rpcClient.execute(DcrCommands.GET_ADDRESSES_BY_ACCOUNT.getName(), account);
+		List<String> addresses = rpcClient.getMapper().mapToList(addressesJson, String.class);
+		return addresses;
 	}
 
 }

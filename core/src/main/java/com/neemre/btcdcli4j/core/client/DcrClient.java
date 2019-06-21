@@ -1,6 +1,7 @@
 package com.neemre.btcdcli4j.core.client;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import com.neemre.btcdcli4j.core.BitcoindException;
@@ -47,5 +48,11 @@ public interface DcrClient {
 
 	BigDecimal getBalance(String account, Integer confirmations, Boolean withWatchOnly) 
 			throws BitcoindException, CommunicationException;
+	
+	Map<String, BigDecimal> listAccounts() throws BitcoindException, CommunicationException;
+	
+	void createNewAccount(String account) throws BitcoindException, CommunicationException;
+	
+	List<String> getAddressesByAccount(String account) throws BitcoindException, CommunicationException;
 
 }
